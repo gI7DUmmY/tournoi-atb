@@ -38,7 +38,6 @@
                 type="submit">
                 Inscrire
               </button>
-              <!-- &nbsp; -->
               <button @click="vider" class="waves-effect waves-light btn red lighten-1">
                 Vider
               </button>
