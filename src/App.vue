@@ -2,28 +2,54 @@
   <div id="app">
     <div class="container">
       <h2 class="center-align">
-        <img src="./assets/media/figure-bleue.jpg" alt="fig-blue" height="55px" width="auto">
+        <img
+          src="./assets/media/figure-bleue.jpg"
+          alt="fig-blue"
+          height="55px"
+          width="auto">
         Tournoi ATB
-        <img src="./assets/media/figure-rouge.jpg" alt="fig-red" height="55px" width="auto">
+        <img
+          src="./assets/media/figure-rouge.jpg"
+          alt="fig-red"
+          height="55px"
+          width="auto">
       </h2>
       <div class="center-align"  id="top">
-        <img class="circle" src="./assets/media/cropped-ATB-white.png" alt="logo-club" height="60px" width="auto">
+        <img
+          class="circle"
+          src="./assets/media/cropped-ATB-white.png"
+          alt="logo-club"
+          height="60px"
+          width="auto">
       </div>
       <div class="row">
         <form class="col s12" @submit.prevent="ajouter(player)">
           <div class="row">
             <div class="input-field col s6">
-              <input v-model="player" type="text" id="input-player" class="validate" placeholder="pseudo">
+              <input
+                v-model="player"
+                type="text"
+                id="input-player"
+                class="validate"
+                placeholder="pseudo">
               <label for="pseudo">Joueur à inscrire</label>
-              <button class="waves-effect waves-light btn" type="submit">Inscrire</button>
-              &nbsp;<button @click="vider" class="waves-effect waves-light btn red lighten-1">Vider</button>
+              <button
+                class="waves-effect waves-light btn"
+                type="submit">
+                Inscrire
+              </button>
+              <!-- &nbsp; -->
+              <button @click="vider" class="waves-effect waves-light btn red lighten-1">
+                Vider
+              </button>
             </div>
           </div>
         </form>
       </div>
 
       <div class="row" v-if="joueurs.length > 0">
-        <table class="striped centered">
+        <p>Total: <strong>{{total}}</strong> joueur(s)</p>
+        <table id="tableau" class="striped centered">
           <thead>
             <tr>
               <th>Suppr.</th>
@@ -32,9 +58,9 @@
             </tr>
           </thead>
           <tbody id="tbody">
-            <tr v-for="pseudo in joueurs" :key="pseudo.id">
-              <td><i @click="suppr(pseudo)" class="material-icons small">delete</i></td>
-              <td>{{pseudo}}</td>
+            <tr v-for="joueur in liste" :key="joueur.id">
+              <td><i @click="suppr(joueur.id)" class="material-icons small">delete</i></td>
+              <td>{{joueur.nom}}</td>
               <td>
                 <div class="switch">
                   <label>
@@ -47,7 +73,7 @@
         </table>
         <br>
         <div class="fixed-action-btn">
-          <a href="#top" class="btn-floating btn-large waves-effect waves-light teal lighten-1">
+          <a href="#top" class="btn-floating btn-small waves-effect waves-light teal lighten-1">
             <i class="material-icons">keyboard_arrow_up</i>
           </a>
         </div>
@@ -59,24 +85,27 @@
 <script>
 export default {
   name: 'app',
-  data: () => {
-    return {
-      joueurs: [],
-      player: null,
-    }
+  data: () => ({
+    joueurs: [],
+    player: null,
+  }),
+  computed: {
+    total() {
+      return this.joueurs.length;
+    },
+    liste() {
+      return this.joueurs.slice().reverse();
+    },
   },
   methods: {
     ajouter(pseudo) {
       if (pseudo) {
-        this.joueurs.push(pseudo);
-        this.joueurs = this.joueurs.reverse();
+        this.joueurs.push({ id: Date.now(), nom: pseudo });
         this.player = '';
       }
     },
-    suppr(pseudo) {
-      this.joueurs = this.joueurs.filter((t) => {
-        return pseudo !== t;
-      });
+    suppr(id) {
+      this.joueurs = this.joueurs.filter(t => id !== t.id);
     },
     vider() {
       this.joueurs = [];
@@ -117,11 +146,22 @@ h2 {
   font-weight: bold;
 }
 
+strong {
+  font-family: "Libre Franklin";
+  font-weight: bolder;
+  color: dodgerblue;
+}
+
 i:hover {
   cursor: pointer;
 }
 
-#input-player {
-  margin-bottom: 20px;
+button {
+  margin: 10px 5px;
 }
+
+#tableau {
+  margin-bottom: 25px;
+}
+
 </style>
