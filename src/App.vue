@@ -1,27 +1,30 @@
 <template>
   <div id="app">
     <div class="container">
-      <h2 class="center-align">
-        <img
-          src="./assets/media/figure-bleue.jpg"
-          alt="fig-blue"
-          height="55px"
-          width="auto">
-        Tournoi ATB
-        <img
-          src="./assets/media/figure-rouge.jpg"
-          alt="fig-red"
-          height="55px"
-          width="auto">
-      </h2>
-      <div class="center-align"  id="top">
-        <img
-          class="circle"
-          src="./assets/media/cropped-ATB-white.png"
-          alt="logo-club"
-          height="60px"
-          width="auto">
+      <div class="row">
+        <h2 class="center-align">
+          <img
+            src="./assets/media/figure-bleue.jpg"
+            alt="fig-blue"
+            height="55px"
+            width="auto">
+          Tournoi ATB
+          <img
+            src="./assets/media/figure-rouge.jpg"
+            alt="fig-red"
+            height="55px"
+            width="auto">
+        </h2>
+        <div class="center-align"  id="top">
+          <img
+            class="circle"
+            src="./assets/media/cropped-ATB-white.png"
+            alt="logo-club"
+            height="60px"
+            width="auto">
+        </div>
       </div>
+
       <div class="row">
         <form class="col s12" @submit.prevent="ajouter(player)">
           <div class="row">
@@ -161,6 +164,14 @@ button {
 
 #tableau {
   margin-bottom: 25px;
+}
+
+@media (max-width: 450px) {
+  h2 {
+    font-size: 2.4rem;
+    font-family: "Libre Baskerville", serif;
+    font-weight: bold;
+  }
 }
 
 </style>
