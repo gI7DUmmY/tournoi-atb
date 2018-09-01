@@ -27,7 +27,6 @@
 
       <div class="row">
         <form class="col s12" @submit.prevent="ajouter(player)">
-          <div class="row">
             <div class="input-field col s6">
               <input
                 v-model="player"
@@ -45,7 +44,6 @@
                 Vider
               </button>
             </div>
-          </div>
         </form>
       </div>
 
