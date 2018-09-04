@@ -54,17 +54,21 @@
             <tr>
               <th>Suppr.</th>
               <th>Pseudo</th>
-              <th>Payé</th>
+              <th @click="toggle">
+                Payé&nbsp;&nbsp;<font-awesome-icon icon="eye" size="lg"></font-awesome-icon>
+              </th>
             </tr>
           </thead>
           <tbody id="tbody">
-            <tr v-for="joueur in liste" :key="joueur.id">
+            <tr v-for="joueur in liste" :key="joueur.id" :hidden="joueur.hidden">
               <td><i @click="suppr(joueur.id)" class="material-icons small">delete</i></td>
               <td>{{joueur.nom}}</td>
               <td>
                 <div class="switch">
                   <label>
-                    Non&nbsp;<input type="checkbox"><span class="lever"></span>&nbsp;Oui
+                    Non&nbsp;
+                    <input v-model="joueur.payed" type="checkbox">
+                    <span class="lever"></span>&nbsp;Oui
                   </label>
                 </div>
               </td>
@@ -86,7 +90,8 @@
 export default {
   name: 'app',
   data: () => ({
-    joueurs: [],
+    joueurs: [
+    ],
     player: null,
   }),
   computed: {
@@ -100,7 +105,9 @@ export default {
   methods: {
     ajouter(pseudo) {
       if (pseudo) {
-        this.joueurs.push({ id: Date.now(), nom: pseudo });
+        this.joueurs.push({
+          id: Date.now(), nom: pseudo, payed: false, hidden: false,
+        });
         this.player = '';
       }
     },
@@ -109,6 +116,14 @@ export default {
     },
     vider() {
       this.joueurs = [];
+    },
+    toggle() {
+      this.joueurs.forEach((joueur) => {
+        const jo = joueur;
+        if (jo.payed) {
+          jo.hidden = true;
+        }
+      });
     },
   },
 };
