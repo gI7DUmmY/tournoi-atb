@@ -23,7 +23,7 @@
             height="60px"
             width="auto">
         </div>
-      </div>
+      </div><!-- end .row -->
 
       <div class="row">
         <form class="col s12" @submit.prevent="ajouter(player)">
@@ -45,7 +45,7 @@
               </button>
             </div>
         </form>
-      </div>
+      </div><!-- end .row -->
 
       <div class="row" v-if="joueurs.length > 0">
         <p>Total: <strong>{{total}}</strong> joueur(s)</p>
@@ -54,8 +54,8 @@
             <tr>
               <th>Suppr.</th>
               <th>Pseudo</th>
-              <th @click="toggle">
-                Payé&nbsp;&nbsp;<font-awesome-icon icon="eye" size="lg"></font-awesome-icon>
+              <th @click="toggle" id="filtre">
+                Payé&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg" />
               </th>
             </tr>
           </thead>
@@ -81,9 +81,9 @@
             <i class="material-icons">keyboard_arrow_up</i>
           </a>
         </div>
-      </div>
-    </div>
-  </div>
+      </div><!-- end .row -->
+    </div><!-- end .container -->
+  </div><!-- end #app -->
 </template>
 
 <script>
@@ -93,6 +93,7 @@ export default {
     joueurs: [
     ],
     player: null,
+    filtered: false,
   }),
   computed: {
     total() {
@@ -100,6 +101,12 @@ export default {
     },
     liste() {
       return this.joueurs.slice().reverse();
+    },
+    eye_icon() {
+      if (this.filtered) {
+        return 'eye-slash';
+      }
+      return 'eye';
     },
   },
   methods: {
@@ -118,12 +125,22 @@ export default {
       this.joueurs = [];
     },
     toggle() {
-      this.joueurs.forEach((joueur) => {
-        const jo = joueur;
-        if (jo.payed) {
-          jo.hidden = true;
-        }
-      });
+      this.filtered = !this.filtered;
+      if (this.filtered) {
+        this.joueurs.forEach((joueur) => {
+          const jo = joueur;
+          if (jo.payed) {
+            jo.hidden = true;
+          }
+        });
+      } else {
+        this.joueurs.forEach((joueur) => {
+          const jo = joueur;
+          if (jo.hidden) {
+            jo.hidden = false;
+          }
+        });
+      }
     },
   },
 };
@@ -177,6 +194,10 @@ button {
 
 #tableau {
   margin-bottom: 25px;
+}
+
+#filtre {
+  cursor: pointer;
 }
 
 @media (max-width: 450px) {
