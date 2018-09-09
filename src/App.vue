@@ -40,15 +40,15 @@
                 type="submit">
                 Inscrire
               </button>
-              <button @click="vider" class="waves-effect waves-light btn red lighten-1">
-                Vider
-              </button>
             </div>
         </form>
       </div><!-- end .row -->
 
       <div class="row" v-if="joueurs.length > 0">
         <p>Total: <strong>{{total}}</strong> joueur(s)</p>
+        <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
+          Vider
+        </button>
         <table id="tableau" class="striped centered">
           <thead>
             <tr>
