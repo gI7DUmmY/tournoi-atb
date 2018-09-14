@@ -123,6 +123,7 @@ export default {
     },
     vider() {
       this.joueurs = [];
+      this.filtered = false;
     },
     toggle() {
       this.filtered = !this.filtered;
