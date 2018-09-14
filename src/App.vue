@@ -23,7 +23,7 @@
             height="60px"
             width="auto">
         </div>
-      </div>
+      </div><!-- end .row -->
 
       <div class="row">
         <form class="col s12" @submit.prevent="ajouter(player)">
@@ -40,31 +40,35 @@
                 type="submit">
                 Inscrire
               </button>
-              <button @click="vider" class="waves-effect waves-light btn red lighten-1">
-                Vider
-              </button>
             </div>
         </form>
-      </div>
+      </div><!-- end .row -->
 
       <div class="row" v-if="joueurs.length > 0">
         <p>Total: <strong>{{total}}</strong> joueur(s)</p>
+        <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
+          Vider
+        </button>
         <table id="tableau" class="striped centered">
           <thead>
             <tr>
               <th>Suppr.</th>
               <th>Pseudo</th>
-              <th>Payé</th>
+              <th @click="toggle" id="filtre">
+                Payé&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg" />
+              </th>
             </tr>
           </thead>
           <tbody id="tbody">
-            <tr v-for="joueur in liste" :key="joueur.id">
+            <tr v-for="joueur in liste" :key="joueur.id" :hidden="joueur.hidden">
               <td><i @click="suppr(joueur.id)" class="material-icons small">delete</i></td>
               <td>{{joueur.nom}}</td>
               <td>
                 <div class="switch">
                   <label>
-                    Non&nbsp;<input type="checkbox"><span class="lever"></span>&nbsp;Oui
+                    Non&nbsp;
+                    <input v-model="joueur.payed" type="checkbox">
+                    <span class="lever"></span>&nbsp;Oui
                   </label>
                 </div>
               </td>
@@ -77,17 +81,19 @@
             <i class="material-icons">keyboard_arrow_up</i>
           </a>
         </div>
-      </div>
-    </div>
-  </div>
+      </div><!-- end .row -->
+    </div><!-- end .container -->
+  </div><!-- end #app -->
 </template>
 
 <script>
 export default {
   name: 'app',
   data: () => ({
-    joueurs: [],
+    joueurs: [
+    ],
     player: null,
+    filtered: false,
   }),
   computed: {
     total() {
@@ -96,11 +102,19 @@ export default {
     liste() {
       return this.joueurs.slice().reverse();
     },
+    eye_icon() {
+      if (this.filtered) {
+        return 'eye-slash';
+      }
+      return 'eye';
+    },
   },
   methods: {
     ajouter(pseudo) {
       if (pseudo) {
-        this.joueurs.push({ id: Date.now(), nom: pseudo });
+        this.joueurs.push({
+          id: Date.now(), nom: pseudo, payed: false, hidden: false,
+        });
         this.player = '';
       }
     },
@@ -109,6 +123,24 @@ export default {
     },
     vider() {
       this.joueurs = [];
+    },
+    toggle() {
+      this.filtered = !this.filtered;
+      if (this.filtered) {
+        this.joueurs.forEach((joueur) => {
+          const jo = joueur;
+          if (jo.payed) {
+            jo.hidden = true;
+          }
+        });
+      } else {
+        this.joueurs.forEach((joueur) => {
+          const jo = joueur;
+          if (jo.hidden) {
+            jo.hidden = false;
+          }
+        });
+      }
     },
   },
 };
@@ -162,6 +194,10 @@ button {
 
 #tableau {
   margin-bottom: 25px;
+}
+
+#filtre {
+  cursor: pointer;
 }
 
 @media (max-width: 450px) {
