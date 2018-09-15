@@ -94,6 +94,7 @@ export default {
     ],
     player: null,
     filtered: false,
+    clear: false,
   }),
   computed: {
     total() {
@@ -122,8 +123,13 @@ export default {
       this.joueurs = this.joueurs.filter(t => id !== t.id);
     },
     vider() {
-      this.joueurs = [];
-      this.filtered = false;
+      // eslint-disable-next-line
+      this.clear = confirm('Effacer la liste?');
+      if (this.clear === true) {
+        this.joueurs = [];
+        this.filtered = false;
+        this.clear = false;
+      }
     },
     toggle() {
       this.filtered = !this.filtered;
