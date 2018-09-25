@@ -60,7 +60,13 @@
             </tr>
           </thead>
           <tbody id="tbody">
-            <tr v-for="joueur in liste" :key="joueur.id" :hidden="joueur.hidden">
+            <tr v-for="joueur in liste" :key="joueur.id" :hidden="joueur.hidden"
+            :class="[
+              { 'light-green': joueur.payed },
+              { 'darken-3': joueur.payed },
+              { 'grey-text': joueur.payed },
+              { 'text-lighten-4': joueur.payed }
+            ]">
               <td><i @click="suppr(joueur.id)" class="material-icons small">delete</i></td>
               <td>{{joueur.nom}}</td>
               <td>
