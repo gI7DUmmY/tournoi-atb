@@ -89,7 +89,8 @@
         <br>
         <div class="fixed-action-btn">
           <a href="#top" class="btn-floating btn-small waves-effect waves-light teal lighten-1">
-            <i class="material-icons">keyboard_arrow_up</i>
+            <!-- <i class="material-icons">keyboard_arrow_up</i> -->
+            <font-awesome-icon icon="angle-up" />
           </a>
         </div>
       </div><!-- end .row -->
