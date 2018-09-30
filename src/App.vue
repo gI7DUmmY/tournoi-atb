@@ -45,7 +45,8 @@
       </div><!-- end .row -->
 
       <div class="row" v-if="joueurs.length > 0">
-        <p>Total: <strong>{{total}}</strong> joueur(s)</p>
+        <p>Total: <strong>{{encaisse}}</strong> encaiss&eacute;(s) / <strong>{{total}}</strong> inscrit(s)</p>
+        <p><font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;<strong>{{bank}} €</strong></p>
         <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
           Vider
         </button>
@@ -55,7 +56,7 @@
               <th>Suppr.</th>
               <th>Pseudo</th>
               <th @click="toggle" id="filtre">
-                Payé&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg" />
+                encaiss&eacute;&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg" />
               </th>
             </tr>
           </thead>
@@ -67,13 +68,17 @@
               { 'grey-text': joueur.payed },
               { 'text-lighten-4': joueur.payed }
             ]">
-              <td><i @click="suppr(joueur.id)" class="material-icons small">delete</i></td>
+              <td>
+                <button :class="[joueur.payed ? 'disabled' : '', 'btn-flat']">
+                  <font-awesome-icon @click="suppr(joueur.id)" icon="trash" size="lg" />
+                </button>
+              </td>
               <td>{{joueur.nom}}</td>
               <td>
                 <div class="switch">
                   <label>
                     Non&nbsp;
-                    <input v-model="joueur.payed" type="checkbox">
+                    <input v-model="joueur.payed" type="checkbox" @click="compte(joueur.payed)">
                     <span class="lever"></span>&nbsp;Oui
                   </label>
                 </div>
@@ -99,6 +104,7 @@ export default {
     joueurs: [
     ],
     player: null,
+    encaisse: 0,
     filtered: false,
     clear: false,
   }),
@@ -114,6 +120,9 @@ export default {
         return 'eye-slash';
       }
       return 'eye';
+    },
+    bank() {
+      return this.encaisse * 5;
     },
   },
   methods: {
@@ -133,6 +142,7 @@ export default {
       this.clear = confirm('Effacer la liste?');
       if (this.clear === true) {
         this.joueurs = [];
+        this.encaisse = 0;
         this.filtered = false;
         this.clear = false;
       }
@@ -154,6 +164,11 @@ export default {
           }
         });
       }
+    },
+    compte(paye) {
+      if (paye === false) {
+        this.encaisse += 1;
+      } else this.encaisse -= 1;
     },
   },
 };
