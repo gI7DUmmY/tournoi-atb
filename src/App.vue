@@ -69,9 +69,9 @@
               { 'text-lighten-4': joueur.payed }
             ]">
               <td>
-                <button :class="[joueur.payed ? 'disabled' : '', 'btn-flat']">
+                <a :class="[joueur.payed ? 'disabled' : '', 'btn-flat']">
                   <font-awesome-icon @click="suppr(joueur.id)" icon="trash" size="lg" />
-                </button>
+                </a>
               </td>
               <td>{{joueur.nom}}</td>
               <td>
