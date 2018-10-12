@@ -50,6 +50,14 @@
         <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
           Vider
         </button>
+        <button
+        id="copy"
+        class="waves-effect waves-light btn green lighten-1"
+        v-clipboard:copy="toClipboard"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError">
+          <i class="material-icons left"><font-awesome-icon icon="copy"/></i>Copier Liste
+        </button>
         <table id="tableau" class="striped centered">
           <thead>
             <tr>
@@ -101,8 +109,7 @@
 export default {
   name: 'app',
   data: () => ({
-    joueurs: [
-    ],
+    joueurs: [],
     player: null,
     encaisse: 0,
     filtered: false,
@@ -114,6 +121,14 @@ export default {
     },
     liste() {
       return this.joueurs.slice().reverse();
+    },
+    toClipboard() {
+      let res = '';
+      this.joueurs.forEach((el) => {
+        const j = el;
+        res = `${res}${j.nom};`;
+      });
+      return res;
     },
     eye_icon() {
       if (this.filtered) {
@@ -169,6 +184,14 @@ export default {
       if (paye === false) {
         this.encaisse += 1;
       } else this.encaisse -= 1;
+    },
+    onCopy(e) {
+      // eslint-disable-next-line
+      alert('Les pseudos sont dans le presse-papiers :\n' + e.text);
+    },
+    onError(e) {
+      // eslint-disable-next-line
+      alert('Failed to copy texts' + e);
     },
   },
 };
