@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
+      <!-- Titre -->
       <div class="row">
         <h2 class="center-align">
           <img
@@ -23,18 +24,21 @@
             height="60px"
             width="auto">
         </div>
-      </div><!-- end .row -->
+      </div><!-- end .row Titre -->
 
+      <!-- Inscription -->
       <div class="row">
         <form class="col s12" @submit.prevent="ajouter(player)">
             <div class="input-field col s6">
+              <i class="material-icons prefix"><font-awesome-icon icon="user"/></i>
               <input
                 v-model="player"
                 type="text"
                 id="input-player"
                 class="validate"
-                placeholder="pseudo">
-              <label for="pseudo">Joueur à inscrire</label>
+                placeholder="pseudo"
+                autofocus>
+              <label for="input-player" class="active">Joueur à inscrire</label>
               <button
                 class="waves-effect waves-light btn"
                 type="submit">
@@ -42,22 +46,40 @@
               </button>
             </div>
         </form>
-      </div><!-- end .row -->
+      </div><!-- end .row Inscription -->
 
+      <!-- Masqué si aucun inscrit -->
       <div class="row" v-if="joueurs.length > 0">
-        <p>Total: <strong>{{encaisse}}</strong> encaiss&eacute;(s) / <strong>{{total}}</strong> inscrit(s)</p>
-        <p><font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;<strong>{{bank}} €</strong></p>
-        <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
-          Vider
-        </button>
-        <button
-        id="copy"
-        class="waves-effect waves-light btn green lighten-1"
-        v-clipboard:copy="toClipboard"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError">
-          <i class="material-icons left"><font-awesome-icon icon="copy"/></i>Copier Liste
-        </button>
+        <!-- infos / tarif -->
+        <div class="row">
+          <!-- eslint-disable-next-line -->
+          Total: <strong>{{encaisse}}</strong> encaiss&eacute;(s) / <strong>{{total}}</strong> inscrit(s)
+          <div class="col s12">
+            Tarif (€/personne):
+            <div class="input-field inline">
+              <input type="number" v-model="tarif" name="tarif">
+            </div>
+          </div>
+        </div><!-- end .row infos / tarif -->
+
+        <!-- Caisse et boutons -->
+        <div class="row">
+          <!-- eslint-disable-next-line -->
+          <font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;<strong>{{bank}} €</strong><br>
+          <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
+            Vider
+          </button>
+          <button
+            id="copy"
+            class="waves-effect waves-light btn green lighten-1"
+            v-clipboard:copy="toClipboard"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError">
+            <i class="material-icons left"><font-awesome-icon icon="copy"/></i>Copier Liste
+          </button>
+        </div><!-- end .row caisse et boutons -->
+
+        <!-- Tableau des inscrits -->
         <table id="tableau" class="striped centered">
           <thead>
             <tr>
@@ -94,13 +116,12 @@
             </tr>
           </tbody>
         </table>
-        <br>
         <div class="fixed-action-btn">
           <a href="#top" class="btn-floating btn-small waves-effect waves-light teal lighten-1">
             <font-awesome-icon icon="angle-up" />
           </a>
         </div>
-      </div><!-- end .row -->
+      </div><!-- end .row si aucun inscrit -->
     </div><!-- end .container -->
   </div><!-- end #app -->
 </template>
@@ -112,6 +133,7 @@ export default {
     joueurs: [],
     player: null,
     encaisse: 0,
+    tarif: 5,
     filtered: false,
     clear: false,
   }),
@@ -137,7 +159,7 @@ export default {
       return 'eye';
     },
     bank() {
-      return this.encaisse * 5;
+      return this.encaisse * this.tarif;
     },
   },
   methods: {
@@ -233,10 +255,6 @@ strong {
   font-family: "Libre Franklin";
   font-weight: bolder;
   color: dodgerblue;
-}
-
-i:hover {
-  cursor: pointer;
 }
 
 button {
