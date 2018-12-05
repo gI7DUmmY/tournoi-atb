@@ -19,7 +19,7 @@
         <div class="center-align"  id="top">
           <img
             class="circle"
-            src="./assets/media/cropped-ATB-white.png"
+            src="./assets/media/logo_atb_white-bg.jpg"
             alt="logo-club"
             height="60px"
             width="auto">
