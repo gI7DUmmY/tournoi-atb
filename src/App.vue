@@ -138,7 +138,7 @@ export default {
     tarif: 5,
     filtered: false,
     clear: false,
-    triPseudo: false
+    triPseudo: false,
   }),
   computed: {
     total() {
@@ -146,7 +146,7 @@ export default {
     },
     liste() {
       if (this.triPseudo) {
-        return this.joueurs.sort((a, b) => (a['nom'] < b['nom'] ? -1 : 1));
+        return this.joueurs.sort((a, b) => (a.nom < b.nom ? -1 : 1));
       }
       return this.joueurs.slice().reverse();
     },
