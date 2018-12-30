@@ -84,7 +84,9 @@
           <thead>
             <tr>
               <th>Suppr.</th>
-              <th>Pseudo</th>
+              <th @click="triPseudo = !triPseudo" id="pseudo">
+                Pseudo &nbsp;&nbsp;<font-awesome-icon icon="sort" size="lg" />
+              </th>
               <th @click="toggle" id="filtre">
                 encaiss&eacute;&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg" />
               </th>
@@ -136,12 +138,16 @@ export default {
     tarif: 5,
     filtered: false,
     clear: false,
+    triPseudo: false
   }),
   computed: {
     total() {
       return this.joueurs.length;
     },
     liste() {
+      if (this.triPseudo) {
+        return this.joueurs.sort((a, b) => (a['nom'] < b['nom'] ? -1 : 1));
+      }
       return this.joueurs.slice().reverse();
     },
     toClipboard() {
@@ -209,7 +215,7 @@ export default {
     },
     onCopy(e) {
       // eslint-disable-next-line
-      alert('Les pseudos sont dans le presse-papiers :\n' + e.text);
+      M.toast({html: this.total + ' pseudos copiés !', classes: 'rounded'});
     },
     onError(e) {
       // eslint-disable-next-line
@@ -263,6 +269,10 @@ button {
 
 #tableau {
   margin-bottom: 25px;
+}
+
+#pseudo {
+  cursor: pointer;
 }
 
 #filtre {
