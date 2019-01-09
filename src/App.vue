@@ -8,43 +8,45 @@
             src="./assets/media/figure-bleue.jpg"
             alt="fig-blue"
             height="55px"
-            width="auto">
+            width="auto"
+          >
           Tournoi ATB
           <img
             src="./assets/media/figure-rouge.jpg"
             alt="fig-red"
             height="55px"
-            width="auto">
+            width="auto"
+          >
         </h2>
-        <div class="center-align"  id="top">
+        <div class="center-align" id="top">
           <img
             class="circle"
             src="./assets/media/logo_atb_white-bg.jpg"
             alt="logo-club"
             height="60px"
-            width="auto">
+            width="auto"
+          >
         </div>
       </div><!-- end .row Titre -->
 
       <!-- Inscription -->
       <div class="row">
         <form class="col s12" @submit.prevent="ajouter(player)">
-            <div class="input-field col s6">
-              <i class="material-icons prefix"><font-awesome-icon icon="user"/></i>
-              <input
-                v-model="player"
-                type="text"
-                id="input-player"
-                class="validate"
-                placeholder="pseudo"
-                autofocus>
-              <label for="input-player" class="active">Joueur à inscrire</label>
-              <button
-                class="waves-effect waves-light btn"
-                type="submit">
-                Inscrire
-              </button>
-            </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix">
+              <font-awesome-icon icon="user"/>
+            </i>
+            <input
+              v-model="player"
+              type="text"
+              id="input-player"
+              class="validate"
+              placeholder="pseudo"
+              autofocus
+            >
+            <label for="input-player" class="active">Joueur à inscrire</label>
+            <button class="waves-effect waves-light btn" type="submit">Inscrire</button>
+          </div>
         </form>
       </div><!-- end .row Inscription -->
 
@@ -52,10 +54,10 @@
       <div class="row" v-if="joueurs.length > 0">
         <!-- infos / tarif -->
         <div class="row">
-          <!-- eslint-disable-next-line -->
-          Total: <strong>{{encaisse}}</strong> encaiss&eacute;(s) / <strong>{{total}}</strong> inscrit(s)
-          <div class="col s12">
-            Tarif (€/personne):
+          Total:
+          <strong>{{ encaisse }}</strong> encaiss&eacute;(s) /
+          <strong>{{ total }}</strong> inscrit(s)
+          <div class="col s12">Tarif (€/personne):
             <div class="input-field inline">
               <input type="number" v-model="tarif" name="tarif" min="0">
             </div>
@@ -65,24 +67,34 @@
         <!-- Caisse et boutons -->
         <div class="row">
           <ul id="rewards">
-            <!-- eslint-disable-next-line -->
-            <li><font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;<strong>{{ bank }} €</strong></li>
-            <li>1er : {{ part_1st }} €</li>
-            <li>2ème : {{ part_2nd }} €</li>
-            <li>3ème : {{ part_3rd }} €</li>
-            <li>Bar : {{ part_bar }} €</li>
+            <li>
+              <font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;
+              <strong>{{ caisse }}</strong>
+            </li>
+            <li><strong>1er :</strong> {{ part_1st }}</li>
+            <li><strong>2ème :</strong> {{ part_2nd }}</li>
+            <li><strong>3ème :</strong> {{ part_3rd }}</li>
+            <li><strong>Bar :</strong> {{ part_bar }}</li>
           </ul>
-          
-          <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
+
+          <button
+            id="vider"
+            @click="vider"
+            class="waves-effect waves-light btn red lighten-1"
+          >
             Vider
           </button>
+
           <button
             id="copy"
             class="waves-effect waves-light btn green lighten-1"
             v-clipboard:copy="toClipboard"
             v-clipboard:success="onCopy"
-            v-clipboard:error="onError">
-            <i class="material-icons left"><font-awesome-icon icon="copy"/></i>Copier Liste
+            v-clipboard:error="onError"
+          >
+            <i class="material-icons left">
+              <font-awesome-icon icon="copy"/>
+            </i>Copier Liste
           </button>
         </div><!-- end .row caisse et boutons -->
 
@@ -92,24 +104,28 @@
             <tr>
               <th>Suppr.</th>
               <th @click="triPseudo = !triPseudo" id="pseudo">
-                Pseudo &nbsp;&nbsp;<font-awesome-icon icon="sort" size="lg" />
+                Pseudo &nbsp;&nbsp;<font-awesome-icon icon="sort" size="lg"/>
               </th>
               <th @click="toggle" id="filtre">
-                encaiss&eacute;&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg" />
+                encaiss&eacute;&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg"/>
               </th>
             </tr>
           </thead>
           <tbody id="tbody">
-            <tr v-for="joueur in liste" :key="joueur.id" :hidden="joueur.hidden"
-            :class="[
-              { 'light-green': joueur.payed },
-              { 'darken-3': joueur.payed },
-              { 'grey-text': joueur.payed },
-              { 'text-lighten-4': joueur.payed }
-            ]">
+            <tr
+              v-for="joueur in liste"
+              :key="joueur.id"
+              :hidden="joueur.hidden"
+              :class="[
+                { 'light-green': joueur.payed },
+                { 'darken-3': joueur.payed },
+                { 'grey-text': joueur.payed },
+                { 'text-lighten-4': joueur.payed }
+              ]"
+            >
               <td>
                 <a :class="[joueur.payed ? 'disabled' : '', 'btn-flat']">
-                  <font-awesome-icon @click="suppr(joueur.id)" icon="trash" size="lg" />
+                  <font-awesome-icon @click="suppr(joueur.id)" icon="trash" size="lg"/>
                 </a>
               </td>
               <td>{{joueur.nom}}</td>
@@ -117,7 +133,11 @@
                 <div class="switch">
                   <label>
                     Non&nbsp;
-                    <input v-model="joueur.payed" type="checkbox" @click="compte(joueur.payed)">
+                    <input
+                      v-model="joueur.payed"
+                      type="checkbox"
+                      @click="compte(joueur.payed)"
+                    >
                     <span class="lever"></span>&nbsp;Oui
                   </label>
                 </div>
@@ -127,7 +147,7 @@
         </table>
         <div class="fixed-action-btn">
           <a href="#top" class="btn-floating btn-small waves-effect waves-light teal lighten-1">
-            <font-awesome-icon icon="angle-up" />
+            <font-awesome-icon icon="angle-up"/>
           </a>
         </div>
       </div><!-- end .row si aucun inscrit -->
@@ -153,7 +173,8 @@ export default {
     },
     liste() {
       if (this.triPseudo) {
-        return this.joueurs.sort((a, b) => (a.nom < b.nom ? -1 : 1));
+        const players = this.joueurs;
+        return players.sort((a, b) => (a.nom < b.nom ? -1 : 1));
       }
       return this.joueurs.slice().reverse();
     },
@@ -176,26 +197,62 @@ export default {
     },
     part_bar() {
       const bar = this.bank * 0.2;
-      return bar.toFixed(2);
+      const res = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+      })
+        .format(bar);
+      return res;
     },
     part_1st() {
       const first = this.bank * 0.5;
-      return first.toFixed(2);
+      const res = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+      })
+        .format(first);
+      return res;
     },
     part_2nd() {
       const second = this.bank * 0.2;
-      return second.toFixed(2);
+      const res = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+      })
+        .format(second);
+      return res;
     },
     part_3rd() {
       const third = this.bank * 0.1;
-      return third.toFixed(2);
-    }
+      const res = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+      })
+        .format(third);
+      return res;
+    },
+    caisse() {
+      const res = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+      })
+        .format(this.bank);
+      return res;
+    },
   },
   methods: {
     ajouter(pseudo) {
       if (pseudo) {
         this.joueurs.push({
-          id: Date.now(), nom: pseudo, payed: false, hidden: false,
+          id: Date.now(),
+          nom: pseudo,
+          payed: false,
+          hidden: false,
         });
         this.player = '';
       }
@@ -205,7 +262,7 @@ export default {
     },
     vider() {
       // eslint-disable-next-line
-      this.clear = confirm('Effacer la liste?');
+      this.clear = confirm("Effacer la liste?");
       if (this.clear === true) {
         this.joueurs = [];
         this.encaisse = 0;
@@ -237,13 +294,13 @@ export default {
         this.encaisse += 1;
       } else this.encaisse -= 1;
     },
-    onCopy(e) {
+    onCopy() {
       // eslint-disable-next-line
-      M.toast({html: this.total + ' pseudos copiés !', classes: 'rounded'});
+      M.toast({ html: this.total + " pseudos copiés !", classes: "rounded" });
     },
     onError(e) {
       // eslint-disable-next-line
-      alert('Failed to copy texts' + e);
+      alert("Failed to copy texts" + e);
     },
   },
 };
@@ -303,7 +360,7 @@ button {
   cursor: pointer;
 }
 
-#rewards li{
+#rewards li {
   display: inline;
   margin-right: 2em;
 }
@@ -315,5 +372,4 @@ button {
     font-weight: bold;
   }
 }
-
 </style>
