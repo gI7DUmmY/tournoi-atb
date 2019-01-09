@@ -66,16 +66,16 @@
 
         <!-- Caisse et boutons -->
         <div class="row">
-          <ul id="rewards">
-            <li>
-              <font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;
-              <strong>{{ caisse }}</strong>
-            </li>
-            <li><strong>1er :</strong> {{ part_1st }}</li>
-            <li><strong>2ème :</strong> {{ part_2nd }}</li>
-            <li><strong>3ème :</strong> {{ part_3rd }}</li>
-            <li><strong>Bar :</strong> {{ part_bar }}</li>
-          </ul>
+          <div>
+            <font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;
+            <strong>{{ caisse }}</strong>
+          </div>
+          <div id="rewards" class="row">
+            <div class="col s6 m3"><strong>1er :</strong> {{ part_1st }}</div>
+            <div class="col s6 m3"><strong>2ème :</strong> {{ part_2nd }}</div>
+            <div class="col s6 m3"><strong>3ème :</strong> {{ part_3rd }}</div>
+            <div class="col s6 m3"><strong>Bar :</strong> {{ part_bar }}</div>
+          </div>
 
           <button
             id="vider"
@@ -360,9 +360,8 @@ button {
   cursor: pointer;
 }
 
-#rewards li {
-  display: inline;
-  margin-right: 2em;
+#rewards {
+  margin-top: 1em;
 }
 
 @media (max-width: 450px) {
