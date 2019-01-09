@@ -57,15 +57,22 @@
           <div class="col s12">
             Tarif (€/personne):
             <div class="input-field inline">
-              <input type="number" v-model="tarif" name="tarif">
+              <input type="number" v-model="tarif" name="tarif" min="0">
             </div>
           </div>
         </div><!-- end .row infos / tarif -->
 
         <!-- Caisse et boutons -->
         <div class="row">
-          <!-- eslint-disable-next-line -->
-          <font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;<strong>{{bank}} €</strong><br>
+          <ul id="rewards">
+            <!-- eslint-disable-next-line -->
+            <li><font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;<strong>{{ bank }} €</strong></li>
+            <li>1er : {{ part_1st }} €</li>
+            <li>2ème : {{ part_2nd }} €</li>
+            <li>3ème : {{ part_3rd }} €</li>
+            <li>Bar : {{ part_bar }} €</li>
+          </ul>
+          
           <button id="vider" @click="vider" class="waves-effect waves-light btn red lighten-1">
             Vider
           </button>
@@ -167,6 +174,22 @@ export default {
     bank() {
       return this.encaisse * this.tarif;
     },
+    part_bar() {
+      const bar = this.bank * 0.2;
+      return bar.toFixed(2);
+    },
+    part_1st() {
+      const first = this.bank * 0.5;
+      return first.toFixed(2);
+    },
+    part_2nd() {
+      const second = this.bank * 0.2;
+      return second.toFixed(2);
+    },
+    part_3rd() {
+      const third = this.bank * 0.1;
+      return third.toFixed(2);
+    }
   },
   methods: {
     ajouter(pseudo) {
@@ -188,6 +211,7 @@ export default {
         this.encaisse = 0;
         this.filtered = false;
         this.clear = false;
+        this.triPseudo = false;
       }
     },
     toggle() {
@@ -277,6 +301,11 @@ button {
 
 #filtre {
   cursor: pointer;
+}
+
+#rewards li{
+  display: inline;
+  margin-right: 2em;
 }
 
 @media (max-width: 450px) {
