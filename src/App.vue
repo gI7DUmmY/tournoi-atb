@@ -57,9 +57,10 @@
           Total:
           <strong>{{ encaisse }}</strong> encaiss&eacute;(s) /
           <strong>{{ total }}</strong> inscrit(s)
-          <div class="col s12">Tarif (€/personne):
+          <div class="col s12">
             <div class="input-field inline">
-              <input type="number" v-model="tarif" name="tarif" min="0">
+              Tarif (€/personne) :&nbsp;
+              <input type="number" v-model="tarif" name="tarif" id="tarif" min="0">
             </div>
           </div>
         </div><!-- end .row infos / tarif -->
@@ -338,6 +339,14 @@ h2 {
   font-weight: bold;
 }
 
+.input-field.inline {
+  margin-left: 0 !important;
+}
+
+.row .col {
+  padding-left: 0rem !important;
+}
+
 strong {
   font-family: "Libre Franklin";
   font-weight: bolder;
@@ -362,6 +371,11 @@ button {
 
 #rewards {
   margin-top: 1em;
+}
+
+#tarif {
+  width: 6rem !important;
+  margin-left: 1rem;
 }
 
 @media (max-width: 450px) {
