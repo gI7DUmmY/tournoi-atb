@@ -1,69 +1,12 @@
 <template>
   <div id="app">
     <div class="container">
-      <!-- Titre -->
-      <div class="row">
-        <h2 class="center-align">
-          <img
-            src="./assets/media/figure-bleue.jpg"
-            alt="fig-blue"
-            height="55px"
-            width="auto"
-          >
-          Tournoi ATB
-          <img
-            src="./assets/media/figure-rouge.jpg"
-            alt="fig-red"
-            height="55px"
-            width="auto"
-          >
-        </h2>
-        <div class="center-align" id="top">
-          <img
-            class="circle"
-            src="./assets/media/logo_atb_white-bg.jpg"
-            alt="logo-club"
-            height="60px"
-            width="auto"
-          >
-        </div>
-      </div><!-- end .row Titre -->
-
-      <!-- Inscription -->
-      <div class="row">
-        <form class="col s12" @submit.prevent="ajouter(player)">
-          <div class="input-field col s6">
-            <i class="material-icons prefix">
-              <font-awesome-icon icon="user"/>
-            </i>
-            <input
-              v-model="player"
-              type="text"
-              id="input-player"
-              class="validate"
-              placeholder="pseudo"
-              autofocus
-            >
-            <label for="input-player" class="active">Joueur à inscrire</label>
-            <button class="waves-effect waves-light btn" type="submit">Inscrire</button>
-          </div>
-        </form>
-      </div><!-- end .row Inscription -->
+      <titre />
+      <inscription @ajouter="ajouter" />
 
       <!-- Masqué si aucun inscrit -->
       <div class="row" v-if="joueurs.length > 0">
-        <!-- infos / tarif -->
-        <div class="row">
-          Total:
-          <strong>{{ encaisse }}</strong> encaiss&eacute;(s) /
-          <strong>{{ total }}</strong> inscrit(s)
-          <div class="col s12">
-            <div class="input-field inline">
-              Tarif (€/personne) :&nbsp;
-              <input type="number" v-model="tarif" name="tarif" id="tarif" min="0">
-            </div>
-          </div>
-        </div><!-- end .row infos / tarif -->
+        <infos :joueurs="joueurs" @tarif="newTarif"/>
 
         <!-- Caisse et boutons -->
         <div class="row">
@@ -157,11 +100,14 @@
 </template>
 
 <script>
+import titre from '@/layouts/Titre.vue';
+import inscription from '@/components/Inscription.vue';
+import infos from '@/components/Infos.vue';
+
 export default {
   name: 'app',
   data: () => ({
     joueurs: [],
-    player: null,
     encaisse: 0,
     tarif: 5,
     filtered: false,
@@ -255,7 +201,6 @@ export default {
           payed: false,
           hidden: false,
         });
-        this.player = '';
       }
     },
     suppr(id) {
@@ -295,6 +240,9 @@ export default {
         this.encaisse += 1;
       } else this.encaisse -= 1;
     },
+    newTarif(tarif) {
+      this.tarif = tarif;
+    },
     onCopy() {
       // eslint-disable-next-line
       M.toast({ html: this.total + " pseudos copiés !", classes: "rounded" });
@@ -303,6 +251,11 @@ export default {
       // eslint-disable-next-line
       alert("Failed to copy texts" + e);
     },
+  },
+  components: {
+    titre,
+    inscription,
+    infos,
   },
 };
 </script>
