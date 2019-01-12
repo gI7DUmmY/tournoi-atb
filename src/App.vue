@@ -6,20 +6,21 @@
 
       <!-- Masqué si aucun inscrit -->
       <div class="row" v-if="joueurs.length > 0">
-        <infos :joueurs="joueurs" @tarif="newTarif"/>
+        <infos
+          :joueurs="joueurs"
+          :encaisse="encaisse"
+          @tarif="newTarif"
+        />
 
         <!-- Caisse et boutons -->
         <div class="row">
-          <div>
-            <font-awesome-icon icon="piggy-bank" size="lg"/>&nbsp;&nbsp;
-            <strong>{{ caisse }}</strong>
-          </div>
-          <div id="rewards" class="row">
-            <div class="col s6 m3"><strong>1er :</strong> {{ part_1st }}</div>
-            <div class="col s6 m3"><strong>2ème :</strong> {{ part_2nd }}</div>
-            <div class="col s6 m3"><strong>3ème :</strong> {{ part_3rd }}</div>
-            <div class="col s6 m3"><strong>Bar :</strong> {{ part_bar }}</div>
-          </div>
+          <caisse
+            :caisse="caisse"
+            :part_1st="part_1st"
+            :part_2nd="part_2nd"
+            :part_3rd="part_3rd"
+            :part_bar="part_bar"
+          />
 
           <button
             id="vider"
@@ -40,55 +41,12 @@
               <font-awesome-icon icon="copy"/>
             </i>Copier Liste
           </button>
-        </div><!-- end .row caisse et boutons -->
+        </div>
+        <!-- end .row caisse et boutons -->
 
         <!-- Tableau des inscrits -->
-        <table id="tableau" class="striped centered">
-          <thead>
-            <tr>
-              <th>Suppr.</th>
-              <th @click="triPseudo = !triPseudo" id="pseudo">
-                Pseudo &nbsp;&nbsp;<font-awesome-icon icon="sort" size="lg"/>
-              </th>
-              <th @click="toggle" id="filtre">
-                encaiss&eacute;&nbsp;&nbsp;<font-awesome-icon :icon="eye_icon" size="lg"/>
-              </th>
-            </tr>
-          </thead>
-          <tbody id="tbody">
-            <tr
-              v-for="joueur in liste"
-              :key="joueur.id"
-              :hidden="joueur.hidden"
-              :class="[
-                { 'light-green': joueur.payed },
-                { 'darken-3': joueur.payed },
-                { 'grey-text': joueur.payed },
-                { 'text-lighten-4': joueur.payed }
-              ]"
-            >
-              <td>
-                <a :class="[joueur.payed ? 'disabled' : '', 'btn-flat']">
-                  <font-awesome-icon @click="suppr(joueur.id)" icon="trash" size="lg"/>
-                </a>
-              </td>
-              <td>{{joueur.nom}}</td>
-              <td>
-                <div class="switch">
-                  <label>
-                    Non&nbsp;
-                    <input
-                      v-model="joueur.payed"
-                      type="checkbox"
-                      @click="compte(joueur.payed)"
-                    >
-                    <span class="lever"></span>&nbsp;Oui
-                  </label>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <tableau :joueurs="joueurs" @suppr="suppr" @compte="compte" />
+
         <div class="fixed-action-btn">
           <a href="#top" class="btn-floating btn-small waves-effect waves-light teal lighten-1">
             <font-awesome-icon icon="angle-up"/>
@@ -103,27 +61,27 @@
 import titre from '@/layouts/Titre.vue';
 import inscription from '@/components/Inscription.vue';
 import infos from '@/components/Infos.vue';
+import tableau from '@/components/Tableau.vue';
+import caisse from '@/components/Caisse.vue';
 
 export default {
   name: 'app',
+  components: {
+    titre,
+    inscription,
+    infos,
+    tableau,
+    caisse,
+  },
   data: () => ({
     joueurs: [],
     encaisse: 0,
     tarif: 5,
-    filtered: false,
     clear: false,
-    triPseudo: false,
   }),
   computed: {
     total() {
       return this.joueurs.length;
-    },
-    liste() {
-      if (this.triPseudo) {
-        const players = this.joueurs;
-        return players.sort((a, b) => (a.nom < b.nom ? -1 : 1));
-      }
-      return this.joueurs.slice().reverse();
     },
     toClipboard() {
       let res = '';
@@ -132,12 +90,6 @@ export default {
         res = `${res}${j.nom};`;
       });
       return res;
-    },
-    eye_icon() {
-      if (this.filtered) {
-        return 'eye-slash';
-      }
-      return 'eye';
     },
     bank() {
       return this.encaisse * this.tarif;
@@ -217,24 +169,6 @@ export default {
         this.triPseudo = false;
       }
     },
-    toggle() {
-      this.filtered = !this.filtered;
-      if (this.filtered) {
-        this.joueurs.forEach((joueur) => {
-          const jo = joueur;
-          if (jo.payed) {
-            jo.hidden = true;
-          }
-        });
-      } else {
-        this.joueurs.forEach((joueur) => {
-          const jo = joueur;
-          if (jo.hidden) {
-            jo.hidden = false;
-          }
-        });
-      }
-    },
     compte(paye) {
       if (paye === false) {
         this.encaisse += 1;
@@ -251,11 +185,6 @@ export default {
       // eslint-disable-next-line
       alert("Failed to copy texts" + e);
     },
-  },
-  components: {
-    titre,
-    inscription,
-    infos,
   },
 };
 </script>

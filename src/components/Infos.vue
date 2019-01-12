@@ -24,9 +24,11 @@
 <script>
 export default {
   name: 'infos',
-  props: ['joueurs'],
+  props: [
+    'joueurs',
+    'encaisse',
+  ],
   data: () => ({
-    encaisse: 0,
     tarif: 5,
   }),
   computed: {
