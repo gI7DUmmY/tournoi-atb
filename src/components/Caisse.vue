@@ -5,19 +5,23 @@
       <strong>{{ caisse }}</strong>
     </div>
     <div id="rewards" class="row">
-      <div class="col s6 m3">
+      <div class="col s6 m2">
         <strong>1er :</strong>
         {{ part_1st }}
       </div>
-      <div class="col s6 m3">
+      <div class="col s6 m2">
         <strong>2ème :</strong>
         {{ part_2nd }}
       </div>
-      <div class="col s6 m3">
+      <div class="col s6 m2">
         <strong>3ème :</strong>
         {{ part_3rd }}
       </div>
-      <div class="col s6 m3">
+      <div class="col s6 m2">
+        <strong>Club :</strong>
+        {{ part_club }}
+      </div>
+      <div class="col s6 m2">
         <strong>Bar :</strong>
         {{ part_bar }}
       </div>
@@ -33,6 +37,7 @@ export default {
     'part_1st',
     'part_2nd',
     'part_3rd',
+    'part_club',
     'part_bar',
   ],
 };

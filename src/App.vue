@@ -19,6 +19,7 @@
             :part_1st="part_1st"
             :part_2nd="part_2nd"
             :part_3rd="part_3rd"
+            :part_club="part_club"
             :part_bar="part_bar"
           />
 
@@ -104,8 +105,18 @@ export default {
         .format(bar);
       return res;
     },
+    part_club() {
+      const club = this.bank * 0.2;
+      const res = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+      })
+        .format(club);
+      return res;
+    },
     part_1st() {
-      const first = this.bank * 0.5;
+      const first = this.bank * 0.3;
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
