@@ -81,9 +81,11 @@ export default {
     clear: false,
   }),
   computed: {
+    // nombre de joueurs inscrits
     total() {
       return this.joueurs.length;
     },
+    // chaine a copier pour import dans kickertools
     toClipboard() {
       let res = '';
       this.joueurs.forEach((el) => {
@@ -92,9 +94,11 @@ export default {
       });
       return res;
     },
+    // total dans la caisse
     bank() {
       return this.encaisse * this.tarif;
     },
+    // dotation du bar
     part_bar() {
       const bar = this.bank * 0.2;
       const res = new Intl.NumberFormat('fr-FR', {
@@ -105,6 +109,7 @@ export default {
         .format(bar);
       return res;
     },
+    // dotation du club
     part_club() {
       const club = this.bank * 0.2;
       const res = new Intl.NumberFormat('fr-FR', {
@@ -115,6 +120,7 @@ export default {
         .format(club);
       return res;
     },
+    // dotation de la 1ere place
     part_1st() {
       const first = this.bank * 0.3;
       const res = new Intl.NumberFormat('fr-FR', {
@@ -125,6 +131,7 @@ export default {
         .format(first);
       return res;
     },
+    // dotation de la 2nde place
     part_2nd() {
       const second = this.bank * 0.2;
       const res = new Intl.NumberFormat('fr-FR', {
@@ -135,6 +142,7 @@ export default {
         .format(second);
       return res;
     },
+    // dotation de la 3eme place
     part_3rd() {
       const third = this.bank * 0.1;
       const res = new Intl.NumberFormat('fr-FR', {
@@ -145,6 +153,7 @@ export default {
         .format(third);
       return res;
     },
+    // total de la caisse format monnaie
     caisse() {
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
@@ -156,6 +165,7 @@ export default {
     },
   },
   methods: {
+    // inscrire un joueur
     ajouter(pseudo) {
       if (pseudo) {
         this.joueurs.push({
@@ -166,9 +176,11 @@ export default {
         });
       }
     },
+    // supprimer un joueur
     suppr(id) {
       this.joueurs = this.joueurs.filter(t => id !== t.id);
     },
+    // vider le tableau des inscrits
     vider() {
       // eslint-disable-next-line
       this.clear = confirm("Effacer la liste?");
@@ -180,14 +192,17 @@ export default {
         this.triPseudo = false;
       }
     },
+    // compte le nombre de paiements
     compte(paye) {
       if (paye === false) {
         this.encaisse += 1;
       } else this.encaisse -= 1;
     },
+    // actualise le tarif d'inscription
     newTarif(tarif) {
       this.tarif = tarif;
     },
+    // toast de confirmation
     onCopy() {
       // eslint-disable-next-line
       M.toast({ html: this.total + " pseudos copiés !", classes: "rounded" });

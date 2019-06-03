@@ -31,10 +31,5 @@ export default {
   data: () => ({
     tarif: 5,
   }),
-  computed: {
-    total() {
-      return this.joueurs.length;
-    },
-  },
 };
 </script>

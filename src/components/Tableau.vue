@@ -1,4 +1,5 @@
 <template>
+<!-- Tableau des inscrits -->
   <table id="tableau" class="striped centered">
     <thead>
       <tr>
@@ -57,11 +58,12 @@ export default {
   }),
   computed: {
     liste() {
+      const players = this.joueurs;
       if (this.triPseudo) {
-        const players = this.joueurs;
         return players.sort((a, b) => (a.nom < b.nom ? -1 : 1));
       }
-      return this.joueurs.slice().reverse();
+      // on affiche le dernier inscrit en tete du tableau par defaut
+      return players.reverse();
     },
     eye_icon() {
       if (this.filtered) {
@@ -71,6 +73,7 @@ export default {
     },
   },
   methods: {
+    // bascule filtre des joueurs qui ont paye
     toggle() {
       this.filtered = !this.filtered;
       if (this.filtered) {
