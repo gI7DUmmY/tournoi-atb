@@ -31,5 +31,11 @@ export default {
   data: () => ({
     tarif: 5,
   }),
+  computed: {
+    // nombre de joueurs inscrits
+    total() {
+      return this.joueurs.length;
+    },
+  },
 };
 </script>

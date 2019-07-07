@@ -81,10 +81,6 @@ export default {
     clear: false,
   }),
   computed: {
-    // nombre de joueurs inscrits
-    total() {
-      return this.joueurs.length;
-    },
     // chaine a copier pour import dans kickertools
     toClipboard() {
       let res = '';
@@ -174,11 +170,13 @@ export default {
           payed: false,
           hidden: false,
         });
+        localStorage.setItem('tableau', JSON.stringify(this.joueurs));
       }
     },
     // supprimer un joueur
     suppr(id) {
       this.joueurs = this.joueurs.filter(t => id !== t.id);
+      localStorage.setItem('tableau', JSON.stringify(this.joueurs));
     },
     // vider le tableau des inscrits
     vider() {
@@ -190,6 +188,7 @@ export default {
         this.filtered = false;
         this.clear = false;
         this.triPseudo = false;
+        localStorage.setItem('tableau', this.joueurs);
       }
     },
     // compte le nombre de paiements
@@ -211,6 +210,12 @@ export default {
       // eslint-disable-next-line
       alert("Failed to copy texts" + e);
     },
+  },
+  created() {
+    // chargement des joueurs du localStorage
+    if (localStorage.getItem('tableau').length > 0) {
+      this.joueurs = JSON.parse(localStorage.getItem('tableau'))
+    }
   },
 };
 </script>
