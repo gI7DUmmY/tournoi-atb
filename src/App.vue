@@ -214,7 +214,7 @@ export default {
   created() {
     // chargement des joueurs du localStorage
     if (localStorage.getItem('tableau').length > 0) {
-      this.joueurs = JSON.parse(localStorage.getItem('tableau'))
+      this.joueurs = JSON.parse(localStorage.getItem('tableau'));
     }
   },
 };
