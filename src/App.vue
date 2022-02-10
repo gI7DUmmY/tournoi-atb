@@ -5,7 +5,7 @@
       <inscription @ajouter="ajouter" />
 
       <!-- Masqué si aucun inscrit -->
-      <div class="row" v-if="joueurs.length > 0">
+      <div class="row" v-if="joueurs.length">
         <infos
           :joueurs="joueurs"
           :encaisse="encaisse"
@@ -204,7 +204,7 @@ export default {
     // toast de confirmation
     onCopy() {
       // eslint-disable-next-line
-      M.toast({ html: this.total + " pseudos copiés !", classes: "rounded" });
+      M.toast({ html: this.joueurs.length + " pseudos copiés !", classes: "rounded" });
     },
     onError(e) {
       // eslint-disable-next-line
@@ -213,7 +213,7 @@ export default {
   },
   created() {
     // chargement des joueurs du localStorage
-    if (localStorage.getItem('tableau').length > 0) {
+    if (localStorage.getItem('tableau')) {
       this.joueurs = JSON.parse(localStorage.getItem('tableau'));
     }
   },

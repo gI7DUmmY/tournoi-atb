@@ -2,7 +2,7 @@
   <div class="row">
     <h2 class="center-align">
       <img src="../assets/media/figure-bleue.jpg" alt="fig-blue" height="55px" width="auto">
-      Tournoi ATB
+      Tournoi TFT
       <img
         src="../assets/media/figure-rouge.jpg"
         alt="fig-red"
@@ -13,7 +13,7 @@
     <div class="center-align" id="top">
       <img
         class="circle"
-        src="../assets/media/logo_atb_white-bg.jpg"
+        src="../assets/media/TFT_Logo.png"
         alt="logo-club"
         height="60px"
         width="auto"
