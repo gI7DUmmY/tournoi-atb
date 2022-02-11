@@ -9,7 +9,17 @@
         <infos
           :joueurs="joueurs"
           :encaisse="encaisse"
+          :ratio1st="ratio1st"
+          :ratio2nd="ratio2nd"
+          :ratio3rd="ratio3rd"
+          :ratioClub="ratioClub"
+          :ratioBar="ratioBar"
           @tarif="newTarif"
+          @1er="newRatio1er"
+          @2nd="newRatio2nd"
+          @3eme="newRatio3rd"
+          @club="newRatioClub"
+          @bar="newRatioBar"
         />
 
         <!-- Caisse et boutons -->
@@ -79,6 +89,11 @@ export default {
     encaisse: 0,
     tarif: 5,
     clear: false,
+    ratio1st: 30,
+    ratio2nd: 20,
+    ratio3rd: 10,
+    ratioClub: 20,
+    ratioBar: 20,
   }),
   computed: {
     // chaine a copier pour import dans kickertools
@@ -96,7 +111,7 @@ export default {
     },
     // dotation du bar
     part_bar() {
-      const bar = this.bank * 0.2;
+      const bar = this.bank * this.ratioBar / 100;
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -107,7 +122,7 @@ export default {
     },
     // dotation du club
     part_club() {
-      const club = this.bank * 0.2;
+      const club = this.bank * this.ratioClub / 100;
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -118,7 +133,7 @@ export default {
     },
     // dotation de la 1ere place
     part_1st() {
-      const first = this.bank * 0.3;
+      const first = this.bank * this.ratio1st / 100;
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -129,7 +144,7 @@ export default {
     },
     // dotation de la 2nde place
     part_2nd() {
-      const second = this.bank * 0.2;
+      const second = this.bank * this.ratio2nd / 100;
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -140,7 +155,7 @@ export default {
     },
     // dotation de la 3eme place
     part_3rd() {
-      const third = this.bank * 0.1;
+      const third = this.bank * this.ratio3rd / 100;
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -199,7 +214,27 @@ export default {
     },
     // actualise le tarif d'inscription
     newTarif(tarif) {
-      this.tarif = tarif;
+      this.tarif = Math.abs(tarif);
+    },
+    // actualise la part de la 1ere place
+    newRatio1er(r1) {
+      this.ratio1st = Math.abs(parseFloat(r1));
+    },
+    // actualise la part de la 2nd place
+    newRatio2nd(r2) {
+      this.ratio2nd = Math.abs(parseFloat(r2));
+    },
+    // actualise la part de la 3eme place
+    newRatio3rd(r3) {
+      this.ratio3rd = Math.abs(parseFloat(r3));
+    },
+    // actualise la part Club
+    newRatioClub(rClub) {
+      this.ratioClub = Math.abs(parseFloat(rClub));
+    },
+    // actualise la part Bar
+    newRatioBar(rBar) {
+      this.ratioBar = Math.abs(parseFloat(rBar));
     },
     // toast de confirmation
     onCopy() {
