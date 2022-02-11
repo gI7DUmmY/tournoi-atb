@@ -107,7 +107,7 @@ export default {
       return this.joueurs.length;
     },
   },
-  created(){
+  created() {
     this.r1 = this.ratio1st;
     this.r2 = this.ratio2nd;
     this.r3 = this.ratio3rd;

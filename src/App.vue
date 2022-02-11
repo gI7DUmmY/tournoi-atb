@@ -111,7 +111,7 @@ export default {
     },
     // dotation du bar
     part_bar() {
-      const bar = this.bank * this.ratioBar / 100;
+      const bar = this.bank * (this.ratioBar / 100);
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -122,7 +122,7 @@ export default {
     },
     // dotation du club
     part_club() {
-      const club = this.bank * this.ratioClub / 100;
+      const club = this.bank * (this.ratioClub / 100);
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -133,7 +133,7 @@ export default {
     },
     // dotation de la 1ere place
     part_1st() {
-      const first = this.bank * this.ratio1st / 100;
+      const first = this.bank * (this.ratio1st / 100);
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -144,7 +144,7 @@ export default {
     },
     // dotation de la 2nde place
     part_2nd() {
-      const second = this.bank * this.ratio2nd / 100;
+      const second = this.bank * (this.ratio2nd / 100);
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -155,7 +155,7 @@ export default {
     },
     // dotation de la 3eme place
     part_3rd() {
-      const third = this.bank * this.ratio3rd / 100;
+      const third = this.bank * (this.ratio3rd / 100);
       const res = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
