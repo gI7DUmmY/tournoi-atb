@@ -89,11 +89,11 @@ export default {
     encaisse: 0,
     tarif: 5,
     clear: false,
-    ratio1st: 30,
-    ratio2nd: 20,
-    ratio3rd: 10,
-    ratioClub: 20,
-    ratioBar: 20,
+    ratio1st: 50,
+    ratio2nd: 30,
+    ratio3rd: 20,
+    ratioClub: 0,
+    ratioBar: 0,
   }),
   computed: {
     // chaine a copier pour import dans kickertools

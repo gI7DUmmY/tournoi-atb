@@ -30,6 +30,7 @@
       <div class="col s2">%Bar</div>
     </div>
 
+    <!-- % des gains -->
     <div class="row no-bot">
       <div class="input-field col s2">
         <input
@@ -77,6 +78,7 @@
         >
       </div>
     </div>
+    <!-- end .row % des gains -->
   </div>
   <!-- end .row infos / tarif -->
 </template>
